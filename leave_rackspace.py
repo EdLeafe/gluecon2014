@@ -90,9 +90,9 @@ def dlo_upload(ctx, region, cont, parts, base_name, chunk_size=None,
 
 
 if __name__ == "__main__":
-    rs = pyrax.create_context(env="default")
+    rs = pyrax.create_context(env="rackspace")
     rs.keyring_auth()
-    hp = pyrax.create_context(env="hp", username="edleafe")
+    hp = pyrax.create_context(env="hp")
     hp.keyring_auth()
 
     rs_region = "ORD"
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     utils.wait_for_build(task, verbose=True, desired=["success", "failure"])
 
     # Transfer it to HP
-    object_name = "%s.vhd" % snap.id
+    obj_name = "%s.vhd" % snap.id
     start = time.time()
     dlo_parts = rs_obj.dlo_fetch(rs_cont_name, obj_name)
     logit("Number of DLO parts:", len(dlo_parts))
